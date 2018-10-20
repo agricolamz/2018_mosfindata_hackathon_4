@@ -44,10 +44,11 @@ moscow@data %>%
   left_join(df, by = c("NAME" = "municipality")) -> 
   moscow@data
 
-pal <- colorNumeric("viridis", NULL)
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
 
 leaflet(moscow) %>%
-
   addPolygons(stroke = FALSE, 
               smoothFactor = 0.3, 
               fillOpacity = 1,
@@ -59,6 +60,8 @@ leaflet(moscow) %>%
             values = moscow@data$value,
             labFormat = labelFormat(suffix = " млн. р."))
 ```
+
+Значение в поселение "Мосрентген": `r df$value[df$municipality == 'Поселение "Мосрентген"']`
 
 ## прoцент от всех доходов
 
@@ -78,10 +81,11 @@ moscow@data %>%
   left_join(df, by = c("NAME" = "municipality")) -> 
   moscow@data
 
-pal <- colorNumeric("viridis", NULL)
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
 
 leaflet(moscow) %>%
-
   addPolygons(stroke = FALSE, 
               smoothFactor = 0.3, 
               fillOpacity = 1,
@@ -93,3 +97,5 @@ leaflet(moscow) %>%
             values = moscow@data$value,
             labFormat = labelFormat(suffix = "%"))
 ```
+
+Значение в поселение "Мосрентген": `r df$value[df$municipality == 'Поселение "Мосрентген"']`
