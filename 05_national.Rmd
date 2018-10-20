@@ -1,0 +1,94 @@
+---
+output:
+  html_document:
+    toc: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+```{r results="asis"}
+cat("
+<style>
+.leaflet-container {
+    background: #FFF;
+}
+</style>
+")
+```
+
+```{r}
+selected <- "Общегосударственные вопросы"
+```
+
+# `r selected` {.tabset .tabset-fade .tabset-pills}
+
+## aбсолютные значения
+
+```{r}
+library(tidyverse)
+library(leaflet)
+
+read_csv("municipalities.csv", na = "") %>% 
+  filter(category == selected) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+pal <- colorNumeric("viridis", NULL)
+
+leaflet(moscow) %>%
+
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              moscow@data$value)) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+
+## прoцент от всех доходов
+
+```{r}
+read_csv("municipalities.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type) %>% 
+  mutate(value = value/sum(value)*100) %>% 
+  filter(category == selected) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+pal <- colorNumeric("viridis", NULL)
+
+leaflet(moscow) %>%
+
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              moscow@data$value)) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```

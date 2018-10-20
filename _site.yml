@@ -1,0 +1,52 @@
+name: ''
+navbar:
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: доходы
+    menu:
+    - text: Налоговые доходы
+      href: 01_tax.html
+    - text: Неналоговые доходы
+      href: 02_non_tax.html
+    - text: Безвозмездные поступления
+      href: 03_gratuitous.html
+    - text: Доходы итого
+      href: 04_overall.html  
+  - text: расходы
+    menu:
+    - text: Общегосударственные вопросы
+      href: 05_national.html
+    - text: Культура, кинематография
+      href: 06_culture.html
+    - text: Социальная политика
+      href: 07_social.html
+    - text: Средства массовой информации
+      href: 08_mass_media.html  
+    - text: Национальная экономика
+      href: 09_ethnic.html
+    - text: Жилищно-коммунальное хозяйство
+      href: 10_housing.html
+    - text: Образование
+      href: 11_education.html
+    - text: Национальная безопасность и правоохранительная деятельность
+      href: 12_security.html          
+    - text: Физическая культура и спорт
+      href: 13_sport.html
+    - text: Расходы итого
+      href: 14_overall.html                  
+  - text: данные
+    href: 15_data.html
+output_dir: docs
+output:
+  html_document:
+    theme: spacelab
+    highlight: pygments
+    toc: no
+    smooth_scroll: no
+    df_print: paged
+    include:
+      after_body: footer.html
+    lib_dir: site_libs
+    self_contained: no
+
