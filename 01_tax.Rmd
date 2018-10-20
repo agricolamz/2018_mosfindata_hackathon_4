@@ -58,10 +58,13 @@ leaflet(moscow) %>%
                               moscow@data$value)) %>%
   addLegend(pal = pal, 
             values = moscow@data$value,
-            labFormat = labelFormat(suffix = " млн. р."))
+            labFormat = labelFormat(suffix = " млн. р.")) %>% 
+  addControl(html = paste0('Значение в поселение "Мосрентген": ',
+                           df$value[df$municipality == 'Поселение "Мосрентген"'],
+                           " млн. р."),
+             position = "bottomleft")
 ```
 
-Значение в поселение "Мосрентген": `r df$value[df$municipality == 'Поселение "Мосрентген"']`
 
 ## прoцент от всех доходов
 
@@ -95,7 +98,9 @@ leaflet(moscow) %>%
                               moscow@data$value)) %>%
   addLegend(pal = pal, 
             values = moscow@data$value,
-            labFormat = labelFormat(suffix = "%"))
+            labFormat = labelFormat(suffix = "%")) %>% 
+  addControl(html = paste0('Значение в поселение "Мосрентген": ',
+                           df$value[df$municipality == 'Поселение "Мосрентген"'],
+                           "%"),
+             position = "bottomleft")
 ```
-
-Значение в поселение "Мосрентген": `r df$value[df$municipality == 'Поселение "Мосрентген"']`
