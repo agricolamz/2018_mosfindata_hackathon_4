@@ -1,0 +1,26 @@
+---
+title: "Данные расходов/доходов для каждого муниципалитета Москвы"
+output:
+  html_document:
+    toc: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE)
+library(tidyverse)
+```
+
+* Данные доступны [здесь](https://github.com/agricolamz/2018_mosfindata_hackathon_4/raw/master/merged.csv). 
+* [Данный скрип](https://raw.githubusercontent.com/agricolamz/2018_mosfindata_hackathon_4/master/crowler_and_data_cleaning.R) (написан на R) содержит
+    * краулер, который обкачал данные с сайта [Открытого бюджета города Москвы](budget.mos.ru), 
+    * скрипт, который обработал результаты, взятые с сайта [Федеральной службы государственной статистики](http://www.gks.ru/), 
+    * cкрипт, который исправляет названия полигонов в `.geojson` файле, скрипт, который автоматически праждает RMarkdown страницы для сайта
+* [Cайт](https://agricolamz.github.io/2018_mosfindata_hackathon_4/) (написан на RMarkdown) и все исходники лежат на [гитхабе](https://github.com/agricolamz/2018_mosfindata_hackathon_4).
+
+```{r}
+read_csv("merged.csv") %>% 
+  DT::datatable()
+```
+

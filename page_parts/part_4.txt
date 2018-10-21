@@ -4,7 +4,7 @@
 ```{r}
 library(tidyverse)
 library(leaflet)
-read_csv("merged.csv", na = "") %>% 
+read_csv("merged.csv") %>% 
   filter(!str_detect(category, "итого")) %>% 
   group_by(municipality, type, year) %>% 
   mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
