@@ -1,0 +1,13 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE)
+```
+```{r results="asis"}
+cat("
+<style>
+.leaflet-container {
+    background: #FFF;
+}
+</style>
+")
+```
+```{r}

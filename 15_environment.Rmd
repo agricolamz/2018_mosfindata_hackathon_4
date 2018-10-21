@@ -1,0 +1,1037 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE)
+```
+```{r results="asis"}
+cat("
+<style>
+.leaflet-container {
+    background: #FFF;
+}
+</style>
+")
+```
+```{r}
+selected <- "Охрана окружающей среды"
+```
+
+# `r selected`
+
+## aбсолютные значения {.tabset .tabset-fade .tabset-pills}
+
+```{r}
+s_year <- 2006
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2007
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2008
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2009
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2010
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2011
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2012
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2013
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2014
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2015
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2016
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2017
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+```{r}
+s_year <- 2018
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv") %>% 
+  filter(category == selected,
+         year == s_year) %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "darkgreen"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 3),
+                              " млн. р.")) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = " млн. р."))
+```
+
+## прoцент от всех расходов {.tabset .tabset-fade .tabset-pills}
+
+```{r}
+s_year <- 2006
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2007
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2008
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2009
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2010
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2011
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2012
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2013
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2014
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2015
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2016
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2017
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+
+```{r}
+s_year <- 2018
+```
+
+### `r s_year`
+```{r}
+library(tidyverse)
+library(leaflet)
+read_csv("merged.csv", na = "") %>% 
+  filter(!str_detect(category, "итого")) %>% 
+  group_by(municipality, type, year) %>% 
+  mutate(value = value/sum(value, na.rm = TRUE)*100) %>% 
+  filter(category == selected,
+               year == s_year) %>% 
+  ungroup() %>% 
+  select(-category, -type) ->
+  df
+
+moscow <- geojsonio::geojson_read("map_moscow_district.geojson", 
+                                  what = "sp")
+moscow@data %>% 
+  left_join(df, by = c("NAME" = "municipality")) -> 
+  moscow@data
+
+moscow <- moscow[moscow$NAME != 'Поселение "Мосрентген"',]
+
+pal <- colorNumeric(c("white", "navy"), NULL)
+
+leaflet(moscow) %>%
+  addPolygons(stroke = FALSE, 
+              smoothFactor = 0.3, 
+              fillOpacity = 1,
+              fillColor = ~pal(moscow@data$value),
+              label = ~paste0(moscow@data$NAME, 
+                              ": ", 
+                              round(moscow@data$value, 2))) %>%
+  addLegend(pal = pal, 
+            values = moscow@data$value,
+            labFormat = labelFormat(suffix = "%"))
+```
+

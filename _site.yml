@@ -33,10 +33,16 @@ navbar:
       href: 12_security.html          
     - text: Физическая культура и спорт
       href: 13_sport.html
+    - text: Национальная оборона
+      href: 14_defence.html
+    - text: Охрана окружающей среды
+      href: 15_environment.html      
     - text: Расходы итого
-      href: 14_overall.html                  
+      href: 16_overall.html                  
   - text: данные
-    href: 15_data.html
+    href: 17_data.html
+  - text: презентация
+    href: 18_prezi.html
 output_dir: docs
 output:
   html_document:

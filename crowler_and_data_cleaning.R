@@ -332,3 +332,33 @@ moscow@data %>%
   moscow@data
 
 geojsonio::geojson_write(moscow, file = "map_moscow_district.geojson")
+
+# site generater ----------------------------------------------------------
+
+df <- read_csv("for_site_generater.csv")
+part_1 <- read_lines("page_parts/part_1.txt")
+part_2 <- read_lines("page_parts/part_2.txt")
+part_3 <- read_lines("page_parts/part_3.txt")
+part_4 <- read_lines("page_parts/part_4.txt")
+
+sapply(1:nrow(df), function(id){
+  result <- c(
+    part_1,
+    paste0('selected <- "', df$category[id], '"'),
+    part_2,
+    paste0(
+      "```{r}\ns_year <- ",
+      2006:2018,
+      "\n",
+      paste0(part_3, collapse = "\n")),
+    paste0('\n## прoцент от всех ',
+           df$type[id],
+           ' {.tabset .tabset-fade .tabset-pills}\n'),
+    paste0(
+      "```{r}\ns_year <- ",
+      2006:2018,
+      "\n",
+      paste0(part_4, collapse = "\n"))
+    )
+  write_lines(result, paste0(df$page[id], ".Rmd"))
+})
