@@ -92,13 +92,14 @@ results %>%
 
 # data from gks.ru --------------------------------------------------------
 setwd("/home/agricolamz/work/materials/2018_mosfindata_hackathon/4")
+## expenses
 library(tidyverse)
-df <- read_csv("not_commit/report.csv")
+df <- read_csv("not_commit/expenses.csv")
 
-a <- which(df$category == "Доходы местного бюджета, фактически исполненные, тысяча рублей")
+a <- which(df$category == "Всего")
 
 df$municipality <- ""
-df$municipality[a-2] <- df$category[a-2]
+df$municipality[a-1] <- df$category[a-1]
 
 repetitions <- data_frame(n = c(a[-1], nrow(df))-a, 
                           municipality = df$category[a-1])
@@ -111,10 +112,12 @@ sapply(1:nrow(repetitions), function(id){
 
 df$municipality <- c(final, NA,NA)
 
+
 df %>% 
   slice(-c(a-1)) %>% 
-  filter(!is.na(category)) %>% 
-  mutate(category = str_replace(category, "Всего", ": итого"),
+  filter(!str_detect(category, "Городское поселение")) %>% 
+  mutate(category = str_replace(category, "Всего", "Расходы: итого"),
+         type = "расходы",
          municipality = case_when(
            municipality == "Академическое" ~ "Академический",
            municipality == "Алексеевское" ~ "Алексеевский",
@@ -157,40 +160,151 @@ df %>%
            municipality == "Ярославское" ~ "Ярославский",
            municipality == "городской округ Троицк" ~ "Городской округ Троицк",    
            municipality == "городской округ Щербинка" ~ "Городской округ Щербинка",  
-           TRUE ~ municipality),
-         category = case_when(
-           str_detect(category, "[Бб]езвозмездные поступления") ~ "Безвозмездные поступления",
-           str_detect(category, "Доходы от перечисления части прибыли государственных и муниципальных унитарных предприятий, остающейся после уплаты налогов и обязательных платежей") ~ "Неналоговые доходы",
-           str_detect(category, "Налог") ~ "Налоговые доходы",
-           str_detect(category, "Культура, кинематография") ~ "Культура, кинематография",
-           str_detect(category, "Доходы от") ~ "Неналоговые доходы",
-           str_detect(category, "Доходы местного") ~ "Неналоговые доходы",
-           str_detect(category, "собственные доходы") ~ "Неналоговые доходы",
-           str_detect(category, "[Фф]изическая культура и спорт") ~ "Физическая культура и спорт",
-           TRUE~category))->
+           TRUE ~ municipality)) -> 
   df
 
-a <- which(df$category == ": итого")
-df$category[a] <- paste0(str_extract(df$category[a-1], "Доходы|Расходы"), df$category[a])
-
+a <- which(df$category == "Внутригородские территории городов федерального значения Москвы и Санкт-Петербурга")
+df$category[a] <- df$category[a-1]
 df %>% 
+  slice(-c(a-1)) %>% 
+  mutate(category = case_when(
+    str_detect(category, "Культура, кинематография и средства массовой информации") ~ "Культура, кинематография",
+    category == "Культура" ~ "Культура, кинематография",
+    category == "Здравоохранение, физическая культура и спорт" ~ "Физическая культура и спорт",
+    str_detect(category, "физическая культура и спорт") ~ "Физическая культура и спорт",
+    str_detect(category, "[Оо]бразование") ~ "Образование",  
+    TRUE ~ category
+  ),
+  source = "http://www.gks.ru") %>%
   gather(year, value, `2006`:`2017`) %>% 
-  filter(!is.na(value)) %>% 
-  mutate(source = "http://www.gks.ru",
-         type = NA) ->
-  df
-
-df2 <- read_csv("municipalities.csv", na = "")
-df2 %>% 
-  mutate(year = "2018",
-         source = "http://budget.mos.ru") %>%
-  select(names(df)) %>% 
-  rbind(df) %>% 
+  filter(!is.na(value)) %>%
   mutate(value = str_replace(value, ",", "."),
          value = as.double(value),
-         value = if_else(year == 2018, value, value/1000))  ->
-  final
+         value = value/1000) %>% 
+  group_by(municipality, type, year, category, source) %>% 
+  summarise(value = sum(value)) %>% 
+  write_csv("not_commit/expenses_cleaned.csv")
 
+## income
+
+df <- read_csv("not_commit/income.csv")
+
+a <- which(df$category == "Всего")
+
+df$municipality <- ""
+df$municipality[a-1] <- df$category[a-1]
+
+repetitions <- data_frame(n = c(a[-1], nrow(df))-a, 
+                          municipality = df$category[a-1])
+
+final <- character()
+
+sapply(1:nrow(repetitions), function(id){
+  final <<- c(final, rep(repetitions$municipality[id], repetitions$n[id]))
+})
+
+df$municipality <- c(final, NA,NA)
+
+df %>% 
+  slice(-c(a-1)) %>% 
+  filter(!str_detect(category, "Городское поселение")) %>% 
+  mutate(category = str_replace(category, "Всего", "Доходы: итого"),
+         type = "доходы",
+         municipality = case_when(
+           municipality == "Академическое" ~ "Академический",
+           municipality == "Алексеевское" ~ "Алексеевский",
+           municipality == "Алтуфьевское" ~ "Алтуфьевский", 
+           municipality == "Бабушкинское" ~ "Бабушкинский",
+           municipality == "Басманное" ~ "Басманный",
+           municipality == "Беговое" ~ "Беговой", 
+           municipality == "Бескудниковское" ~ "Бескудниковский",
+           municipality == "Бутырское" ~ "Бутырский",
+           municipality == "Войковское" ~ "Войковский", 
+           municipality == "Гагаринское" ~ "Гагаринский",
+           municipality == "Головинское" ~ "Головинский",
+           municipality == "Даниловское" ~ "Даниловский", 
+           municipality == "Косино-Ухтомское" ~ "Косино-Ухтомский",
+           municipality == "Красносельское" ~ "Красносельский", 
+           municipality == "Левобережное" ~ "Левобережный", 
+           municipality == "Ломоносовское" ~ "Ломоносовский", 
+           municipality == "Лосиноостровское" ~ "Лосиноостровский", 
+           municipality == "Марьина Роща" ~ "Марьина роща", 
+           municipality == "Мещанское" ~ "Мещанский", 
+           municipality == "Можайское" ~ "Можайский", 
+           municipality == "Молжаниновское" ~ "Молжаниновский",     
+           municipality == "Нагатинский Затон" ~ "Нагатинский затон",     
+           municipality == "Нагорное" ~ "Нагорный",     
+           municipality == "Нижегородское" ~ "Нижегородский",     
+           municipality == "Обручевское" ~ "Обручевский",     
+           municipality == "Останкинское" ~ "Останкинский",     
+           municipality == 'поселение "Мосрентген"' ~ 'Поселение "Мосрентген"',
+           municipality == "Пресненское" ~ "Пресненский",     
+           municipality == "Рязанское" ~ "Рязанский",     
+           municipality == "Савеловское" ~ "Савеловский",     
+           municipality == "Северное" ~ "Северный",     
+           municipality == "Соколиная Гора" ~ "Соколиная гора",  
+           municipality == "Таганское" ~ "Таганский",     
+           municipality == "Тверское" ~ "Тверской",     
+           municipality == "Тимирязевское" ~ "Тимирязевский",     
+           municipality == "Филевский Парк" ~ "Филевский парк",
+           municipality == "Хорошевское" ~ "Хорошевский",     
+           municipality == "Южнопортовое" ~ "Южнопортовый",     
+           municipality == "Ярославское" ~ "Ярославский",
+           municipality == "городской округ Троицк" ~ "Городской округ Троицк",    
+           municipality == "городской округ Щербинка" ~ "Городской округ Щербинка",  
+           TRUE ~ municipality)) -> 
+  df
+
+a <- which(df$category == "Внутригородские территории городов федерального значения Москвы и Санкт-Петербурга")
+df$category[a] <- df$category[a-1]
+
+
+df %>% 
+  slice(-c(a-1)) %>% 
+  mutate(source = "http://www.gks.ru",
+         category = case_when(
+           str_detect(category, "[Нн]алог") ~ "Налоговые доходы",
+           category == "Доходы от перечисления части прибыли  государственных и муниципальных унитарных предприятий, остающейся после уплаты налогов и обязательных платежей" ~ "Неналоговые доходы",
+           str_detect(category, "езвозмездные поступления") ~ "Безвозмездные поступления",
+           str_detect(category, "собственные доходы") ~ "Неналоговые доходы",
+           TRUE ~ category
+         )) %>% 
+  gather(year, value, `2006`:`2017`) %>% 
+  filter(!is.na(value)) %>%
+  mutate(value = str_replace(value, ",", "."),
+         value = as.double(value),
+         value = value/1000) %>% 
+  group_by(municipality, type, year, category, source) %>% 
+  summarise(value = sum(value)) %>% 
+  write_csv("not_commit/income_cleaned.csv")
+
+income <- read_csv("not_commit/income_cleaned.csv")
+expenses <- read_csv("not_commit/expenses_cleaned.csv")
+read_csv("municipalities.csv", na = "") %>% 
+  mutate(source = "http://budget.mos.ru",
+         year = "2018",
+         type = case_when(
+           category == "Налоговые доходы" ~ "доходы",
+           category == "Неналоговые доходы" ~ "доходы",
+           category == "Безвозмездные поступления" ~ "доходы",
+           category == "Доходы: итого" ~ "доходы",
+           category == "Общегосударственные вопросы" ~ "расходы",
+           category == "Культура, кинематография" ~ "расходы",
+           category == "Социальная политика" ~ "расходы",
+           category == "Средства массовой информации" ~ "расходы",
+           category == "Расходы: итого" ~ "расходы",
+           category == "Национальная экономика" ~ "расходы",
+           category == "Жилищно-коммунальное хозяйство" ~ "расходы",
+           category == "Образование" ~ "расходы",
+           category == "Национальная безопасность и правоохранительная деятельность" ~ "расходы",
+           category == "Физическая культура и спорт" ~ "расходы",
+           category == "Национальная оборона" ~ "расходы",
+           category == "Охрана окружающей среды" ~ "расходы",
+           TRUE~"расходы")) %>% 
+  select(names(income)) ->
+  df_2018
+
+final <- rbind(df_2018, income, expenses)
 write_csv(final, "merged.csv")
   
 # correct geojson file ----------------------------------------------------
