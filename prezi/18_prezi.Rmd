@@ -1,0 +1,57 @@
+---
+title: "Доходы и расходы муниципалитетов Москвы"
+subtitle: 'направление "Лучший программный продукт"'
+author: 'Г. Мороз (команда "42")'
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, center, middle
+
+# Цели
+
+---
+
+Получить и визуализировать данные по динамике разных статей бюджета муниципалитетов г. Москвы.
+
+---
+
+На сайте [Открытого бюджета города Москвы](budget.mos.ru) для каждого муниципалитета есть такое:
+
+![](images/04_mos.png)
+
+---
+
+И еще такое:
+
+![](images/05_mos.png)
+
+---
+class: inverse, center, middle
+
+# Для кого?
+
+---
+class: inverse, center, middle
+
+# Источник данных
+
+---
+class: inverse, center, middle
+
+# Результаты
+
+---
+
+![](images/03_git_r.png)
+
+---
+
+class: center, middle
+
+# Спасибо!
